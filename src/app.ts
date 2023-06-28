@@ -1,7 +1,8 @@
 import http, { IncomingMessage, ServerResponse } from "http";
 import { InMemoryDB } from "./database/inMemoryDatabase";
 import { UserId } from "./models/models";
-
+import { getHandle } from "./handlers/endpoints";
+import { handleErrors } from "./helpers/errors";
 const PORT = process.env.PORT || 4000;
 
 export const runServer = (userDB: InMemoryDB) => {
@@ -11,7 +12,11 @@ export const runServer = (userDB: InMemoryDB) => {
 
       try {
         const urlArray = (url as string).split("/").filter((item) => item);
+        const handle = getHandle(method, urlArray, url);
         const userId: UserId = urlArray[2];
+        handle(request, response, userId, userDB).catch((error: unknown) =>
+          handleErrors(error as Error, response)
+        );
       } catch (error) {
         console.log(error as Error, response);
       }
