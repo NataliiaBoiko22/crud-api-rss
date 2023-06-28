@@ -75,11 +75,21 @@ export const putUsers = async (
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(newUser));
   } catch (error) {
-    if (error instanceof SyntaxError) {
-      res.writeHead(400, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "User object is invalid" }));
-    } else if (error instanceof HTTPError) {
+    if (error instanceof HTTPError) {
       res.writeHead(error.statusCode, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: error.message }));
+    } else if (error instanceof Error && error.message.includes("UserId")) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          error: error.message,
+        })
+      );
+    } else if (
+      error instanceof Error &&
+      error.message.includes("User with id")
+    ) {
+      res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: error.message }));
     } else {
       res.writeHead(500, { "Content-Type": "application/json" });
