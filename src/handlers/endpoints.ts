@@ -3,7 +3,10 @@ import { IncomingMessage, ServerResponse } from "http";
 import { getUsers } from "./getUsers";
 import { postUsers } from "./postUsers";
 import { putUsers } from "./putUsers";
+import { deleteUsers } from "./deleteUsers";
+
 import { IMemoryDB } from "../database/inMemoryDatabase";
+
 const enum HTTP_METHOD {
   GET = "GET",
   POST = "POST",
@@ -22,7 +25,7 @@ const endpoints: IEndpoints = {
   [HTTP_METHOD.GET]: getUsers,
   [HTTP_METHOD.POST]: postUsers,
   [HTTP_METHOD.PUT]: putUsers,
-  // [HTTP_METHOD.DELETE]: deleteUsers,
+  [HTTP_METHOD.DELETE]: deleteUsers,
 };
 export const getHandle = (
   method: string | undefined,

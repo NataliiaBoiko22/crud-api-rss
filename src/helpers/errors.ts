@@ -10,12 +10,13 @@ export class HTTPError extends Error {
   }
 }
 
-export const handleErrors = (error: Error, response: ServerResponse) => {
-  if (error instanceof HTTPError) {
-    response.writeHead(error.statusCode, {
+export const handleErrors = (error: unknown, response: ServerResponse) => {
+  if (error instanceof Error) {
+    const httpError = error as HTTPError;
+    response.writeHead(httpError.statusCode, {
       "Content-Type": "application/json",
     });
-    response.end(JSON.stringify({ message: error.message }));
+    response.end(JSON.stringify({ message: httpError.message }));
     return;
   }
 

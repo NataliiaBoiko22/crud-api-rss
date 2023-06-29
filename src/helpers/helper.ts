@@ -1,12 +1,17 @@
 import { IncomingMessage } from "http";
 import { IUser } from "../models/models";
 
-export const checkUsersObject = (user: IUser): boolean =>
-  !!(
+export const checkUserObject = (userObject: object): boolean => {
+  const user = userObject as IUser;
+  return !!(
+    user.username &&
     typeof user.username === "string" &&
+    user.age &&
     typeof user.age === "number" &&
+    user.hobbies &&
     Array.isArray(user.hobbies)
   );
+};
 
 export const getRequestData = (request: IncomingMessage): Promise<object> => {
   return new Promise((resolve, reject) => {
@@ -24,16 +29,4 @@ export const getRequestData = (request: IncomingMessage): Promise<object> => {
       }
     });
   });
-};
-
-export const checkUserObject = (userObject: object): boolean => {
-  const user = userObject as IUser;
-  return !!(
-    user.username &&
-    typeof user.username === "string" &&
-    user.age &&
-    typeof user.age === "number" &&
-    user.hobbies &&
-    Array.isArray(user.hobbies)
-  );
 };
