@@ -1,5 +1,5 @@
 import { InMemoryDB } from "./database/inMemoryDatabase";
-import { runServer } from "./app";
+import { runServer } from "./server/app";
 
 const userDB = new InMemoryDB();
 

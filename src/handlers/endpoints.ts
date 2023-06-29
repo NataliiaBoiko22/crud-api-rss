@@ -4,6 +4,7 @@ import { getUsers } from "./getUsers";
 import { postUsers } from "./postUsers";
 import { putUsers } from "./putUsers";
 import { deleteUsers } from "./deleteUsers";
+import { handleErrors } from "../helpers/errors";
 
 import { IMemoryDB } from "../database/inMemoryDatabase";
 
@@ -14,7 +15,7 @@ const enum HTTP_METHOD {
   DELETE = "DELETE",
 }
 interface IEndpoints {
-  [HTTP_METHOD: string]: (
+  [key: string]: (
     req: IncomingMessage,
     res: ServerResponse,
     userId: string,
@@ -30,7 +31,8 @@ const endpoints: IEndpoints = {
 export const getHandle = (
   method: string | undefined,
   urlArray: string[],
-  url: string | undefined
+  url: string | undefined,
+  res: ServerResponse<IncomingMessage>
 ): Function => {
   if (
     method &&
@@ -40,5 +42,6 @@ export const getHandle = (
   ) {
     return endpoints[method];
   }
-  throw new HTTPError(`Non-existing endpoint ${method} ${url}`, 404);
+
+  throw new HTTPError(`Non-existing endpoint ${method}`, 404);
 };

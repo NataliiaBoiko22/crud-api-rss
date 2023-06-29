@@ -9,39 +9,39 @@ export interface IMemoryDB {
 }
 
 export class InMemoryDB implements IMemoryDB {
-  private _usersStore: { [key: string]: IUser };
+  private _users: { [key: string]: IUser };
 
   constructor() {
-    this._usersStore = {};
+    this._users = {};
   }
 
   public getAll = () => {
-    return Object.values(this._usersStore);
+    return Object.values(this._users);
   };
 
   public get = (userId: string) => {
-    const user = this._usersStore[userId];
+    const user = this._users[userId];
     if (user) return user;
     return null;
   };
 
   public add = (user: IUser) => {
     const userId = uuidv4();
-    this._usersStore[userId] = { ...user, id: userId };
-    return this._usersStore[userId];
+    this._users[userId] = { ...user, id: userId };
+    return this._users[userId];
   };
 
   public update = (userId: string, user: IUser) => {
-    const updatingUser = this._usersStore[userId];
+    const updatingUser = this._users[userId];
     if (!updatingUser) return null;
-    this._usersStore[userId] = { ...updatingUser, ...user, id: userId };
-    return this._usersStore[userId];
+    this._users[userId] = { ...updatingUser, ...user, id: userId };
+    return this._users[userId];
   };
 
   public delete = (userId: string) => {
-    const user = this._usersStore[userId];
+    const user = this._users[userId];
     if (user) {
-      return delete this._usersStore[userId] ? user : null;
+      return delete this._users[userId] ? user : null;
     }
     return null;
   };
