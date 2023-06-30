@@ -30,4 +30,5 @@ export const runServer = (userDB: InMemoryDB) => {
   server.on("error", (error) => {
     console.log("Error http server", error);
   });
+  return server;
 };

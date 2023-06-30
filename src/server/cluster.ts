@@ -1,5 +1,3 @@
-// import cluster from "cluster";
-// import { cpus } from "os";
 import { InMemoryDB } from "../database/inMemoryDatabase";
 import { runServer } from "./app";
 import cluster from "cluster";
