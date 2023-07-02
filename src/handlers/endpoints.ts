@@ -1,25 +1,25 @@
-import { HTTPError } from "../helpers/errors";
-import { IncomingMessage, ServerResponse } from "http";
-import { getUsers } from "./getUsers";
-import { postUsers } from "./postUsers";
-import { putUsers } from "./putUsers";
-import { deleteUsers } from "./deleteUsers";
-import { handleErrors } from "../helpers/errors";
+import { HTTPError } from '../helpers/errors';
+import { IncomingMessage, ServerResponse } from 'http';
+import { getUsers } from './getUsers';
+import { postUsers } from './postUsers';
+import { putUsers } from './putUsers';
+import { deleteUsers } from './deleteUsers';
+import { handleErrors } from '../helpers/errors';
 
-import { IMemoryDB } from "../database/inMemoryDatabase";
+import { IMemoryDB } from '../database/inMemoryDatabase';
 
 const enum HTTP_METHOD {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
 }
 interface IEndpoints {
   [key: string]: (
     req: IncomingMessage,
     res: ServerResponse,
     userId: string,
-    userDB: IMemoryDB
+    userDB: IMemoryDB,
   ) => void | Promise<unknown>;
 }
 const endpoints: IEndpoints = {
@@ -32,12 +32,12 @@ export const getHandle = (
   method: string | undefined,
   urlArray: string[],
   url: string | undefined,
-  res: ServerResponse<IncomingMessage>
+  res: ServerResponse<IncomingMessage>,
 ): Function => {
   if (
     method &&
-    urlArray[0] === "api" &&
-    urlArray[1] === "users" &&
+    urlArray[0] === 'api' &&
+    urlArray[1] === 'users' &&
     endpoints[method]
   ) {
     return endpoints[method];

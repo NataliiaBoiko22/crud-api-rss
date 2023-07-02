@@ -1,20 +1,20 @@
-import { HTTPError } from "../helpers/errors";
-import { UserId } from "../models/models";
-import { IncomingMessage, ServerResponse } from "http";
-import { validate as uuidValidate } from "uuid";
-import { handleErrors } from "../helpers/errors";
-import { IMemoryDB } from "../database/inMemoryDatabase";
+import { HTTPError } from '../helpers/errors';
+import { UserId } from '../models/models';
+import { IncomingMessage, ServerResponse } from 'http';
+import { validate as uuidValidate } from 'uuid';
+import { handleErrors } from '../helpers/errors';
+import { IMemoryDB } from '../database/inMemoryDatabase';
 
 export const getUsers = async (
   req: IncomingMessage,
   res: ServerResponse,
   userId: UserId,
-  userDB: IMemoryDB
+  userDB: IMemoryDB,
 ): Promise<unknown> => {
   try {
     if (!userId) {
       const users = userDB.getAll();
-      res.writeHead(200, { "Content-Type": "application/json" });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(users));
       return;
     }
@@ -25,10 +25,10 @@ export const getUsers = async (
     if (user === null) {
       throw new HTTPError(
         `User with id === ${correctUserId} doesn't exist.`,
-        404
+        404,
       );
     }
-    res.writeHead(200, { "Content-Type": "application/json" });
+    res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(user));
   } catch (error) {
     handleErrors(error, res);

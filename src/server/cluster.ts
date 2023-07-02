@@ -1,7 +1,7 @@
-import { InMemoryDB } from "../database/inMemoryDatabase";
-import { runServer } from "./app";
-import cluster from "cluster";
-import { cpus } from "os";
+import { InMemoryDB } from '../database/inMemoryDatabase';
+import { runServer } from './app';
+import cluster from 'cluster';
+import { cpus } from 'os';
 
 if (cluster.isPrimary) {
   console.log(`Master start ${process.pid}`);
@@ -14,7 +14,7 @@ if (cluster.isPrimary) {
     portCounter++;
   }
 
-  cluster.on("exit", (worker) => {
+  cluster.on('exit', (worker) => {
     console.log(`worker ${worker.process.pid} died`);
     cluster.fork({ PORT: portCounter });
     portCounter++;

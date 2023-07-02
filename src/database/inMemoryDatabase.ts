@@ -1,5 +1,5 @@
-import { IUser } from "models/models";
-import { v4 as uuidv4 } from "uuid";
+import { IUser } from 'models/models';
+import { v4 as uuidv4 } from 'uuid';
 export interface IMemoryDB {
   getAll: () => IUser[];
   get: (userId: string) => IUser | null;
