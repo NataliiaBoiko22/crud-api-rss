@@ -16,7 +16,7 @@ export const handleErrors = (error: unknown, response: ServerResponse) => {
     response.writeHead(httpError.statusCode, {
       "Content-Type": "application/json",
     });
-    response.end(JSON.stringify({ message: httpError.message }));
+    response.end(JSON.stringify(httpError.message));
     return;
   }
 

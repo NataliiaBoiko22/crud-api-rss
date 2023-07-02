@@ -30,7 +30,7 @@ export const putUsers = async (
     const userObject = await getRequestData(req);
     const isCorrectUser = checkUserObject(userObject);
     if (!isCorrectUser) {
-      throw new HTTPError(`User object doesn't contain required fields.`, 400);
+      throw new HTTPError(`User object does not contain required fields.`, 400);
     }
     const newUser = userDB.update(correctUserId, userObject as IUser);
     res.writeHead(200, { "Content-Type": "application/json" });
